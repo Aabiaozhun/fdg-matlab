@@ -8,6 +8,8 @@ function [ scg ] = scg_add_sc( scg, sc1, t, sc2 )
 if ~scg_exist_sc(scg, sc2)
     scg.itosc = put(scg.itosc, count(scg.itosc)+1, sc2);
     scg.sctoi = put(scg.sctoi, sc2, count(scg.itosc));
+    sc2i = get(scg.sctoi, sc2);
+    scg.graph(sc2i, sc2i) = 0;
 end
 
 if t ~= 0

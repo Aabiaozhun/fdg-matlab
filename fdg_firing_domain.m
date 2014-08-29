@@ -1,4 +1,4 @@
-function [gl, gu] = fdg_firing_domain(scsigma, tsigma, tpn, I)
+function [gl, gu] = fdg_firing_domain(scsigma, tsigma, tpn)
 
 % compute the firing domain of a firing sequence
 
@@ -138,9 +138,9 @@ for ti = find(enml>0)
 end
 
 % solve
-[~, fmin, ~, ~] = glpk(f, cons, b, I(:, 1), I(:, 2));
+[~, fmin, ~, ~] = glpk(f, cons, b, tpn.I(:, 1), tpn.I(:, 2));
 gl = fmin;
-[~, fmin, ~, ~] = glpk(-f, cons, b, I(:, 1), I(:, 2));
+[~, fmin, ~, ~] = glpk(-f, cons, b, tpn.I(:, 1), tpn.I(:, 2));
 gu = -fmin;
 
 return;

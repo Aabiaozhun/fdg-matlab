@@ -21,7 +21,7 @@ for scu = scg_all_sc(scg)
     if ~isempty(ento)
         fireto = [];
         for t = ento
-            if sc_is_firable(scu, t, tpn.pre, I)
+            if sc_is_firable(scu, t, tpn)
                 fireto = [fireto, t];
             end
         end
@@ -29,11 +29,31 @@ for scu = scg_all_sc(scg)
         if sc_is_equal(sc0, scu)
             Dsigma = Dnormal;
             for t = fireto
-                scm = sc_successor(scu, t, pre, post, I);
-                
+                scm = sc_successor(scu, t, tpn);
+                if ~scg_exist_sc(fdg, scm)
+                    fdg = scg_add_sc(fdg, sc0, t, scm);
+                    W{end+1} = scm;
+                end
+                [gl, gu] = fdg_firing_domain(scu, t, tpn);
+                fdg = fdg_add_edge_label(fdg, sc0, scu, [gl, gu],...
+                    t, tpn, To, Tfc);
             end
         else
-            
+            [scpaths, tpaths] = scg_all_paths(scg, sc0, scu);
+            for j = 1:size(scpaths, 2)
+                scsigma = scpaths{j};
+                tsigma = tpaths{j};
+                for t = fireto
+                    scm = sc_successor(scu, t, tpn);
+                    if ~scg_exist_sc(fdg, scm)
+                        fdg = scg_add_sc(fdg, sc0, t, scm);
+                        W{end+1} = scm;
+                    end
+                    [gl, gu] = fdg_firing_domain(scsigma, [tsigma t], tpn);
+                    fdg = fdg_add_edge_label(fdg, sc0, scu, [gl, gu],...
+                        [tsigma t], tpn, To, Tfc);
+                end
+            end
         end
     end
 end
