@@ -1,14 +1,14 @@
-function [firable] = sc_is_firable(sc, t, pre, I)
+function [firable] = sc_is_firable(sc, t, tpn, I)
 
 % Algorithm 1 isFirable in the paper...
-[m, d] = sc_unpack(sc);
+% [m, d] = sc_unpack(sc);
 
 firable = 0;
-if isempty(find(petri_enabled_trans(m, pre)==t, 1))
+if isempty(find(petri_enabled_trans(sc.m, tpn)==t, 1))
     return;
 end
 
-d1 = domain_alg1_step4(m, d, t, pre);
+d1 = domain_alg1_step4(sc.m, sc.d, t, tpn);
 a = d1(:, 1:end-1);
 b = d1(:, end);
 

@@ -1,6 +1,6 @@
 % author: Xu Wang
 
-function [ scg ] = scg( sc0, pre, post, I, To )
+function [ scg ] = scg( sc0, tpn, To )
 
 % Compute an unobservable state class graph starting from sc0.
 % To is a binary vector indicates observable transitions.
@@ -11,12 +11,12 @@ W = {sc0};
 while ~isempty(W)
     w = W{1};
     W = W{2:end};
-    [twm, twd] = sc_unpack(w);
-    entrans = petri_enabled_trans(twm, pre);
-    for i = 1:size(pre, 2)
+%     [twm, twd] = sc_unpack(w);
+    entrans = petri_enabled_trans(w.m, tpn);
+    for i = 1:size(tpn.pre, 2)
         if entrans(i) == 1 && To(i) == 0
             if sc_is_firable(w, i, pre, I)
-                suc = sc_successor(w, i, pre, post, I);
+                suc = sc_successor(w, i, tpn);
                 if ~scg_exist_sc(scg, suc)
                     W{end+1} = suc;
                 end

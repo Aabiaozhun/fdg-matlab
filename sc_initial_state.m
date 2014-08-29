@@ -1,8 +1,8 @@
-function [ sc0 ] = sc_initial_state( m, pre, I )
+function [ sc0 ] = sc_initial_state( m, tpn, I )
 
 % Create the initial state from the initial marking
 
-entrans = petri_enabled_trans(m, pre);
+entrans = petri_enabled_trans(m, tpn);
 d = domain_gen_inequality(entrans(1), 0, I(2, entrans(1)));
 d = domain_add_inequality(d, 0, entrans(1), -I(1, entrans(1)));
 
