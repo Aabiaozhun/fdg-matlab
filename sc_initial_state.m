@@ -12,7 +12,10 @@ for i = 2:length(entrans)
     d = domain_add_inequality(d, t, 0, I(2, t));
 end
 
-sc0 = sc_pack(m, d);
+sc0.m = m;
+sc0.d = d;
+
+% sc0 = sc_pack(m, d);
 
 end
 

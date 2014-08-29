@@ -21,7 +21,7 @@ end
 
 % the first state
 sc1 = scsigma{1};
-[~, d1] = sc_unpack(sc1);
+% [~, sc1.d] = sc_unpack(sc1);
 
 for i = fliplr(1:lengtsigma)
     ti = tsigma(i);
@@ -29,13 +29,15 @@ for i = fliplr(1:lengtsigma)
     flag = 0;
     for j = fliplr(2:lengtsigma)
         % j-th state
-        [mj, dj] = sc_unpack(scsigma{j});
-        [mj1, ~] = sc_unpack(scsigma{j-1});
-        % ti becomes enabled at mj?
-        enmj = petri_enabled_trans(mj, pre);
-        enmj1 = petri_enabled_trans(mj1, pre);
-        if enmj(ti) > 0 && enmj1(ti) == 0
-            [l, u] = domain_firing_interval(dj, ti);
+        scj = scsigma{j};
+        scj1 = scsigma{j-1};
+        % [scj.m, scj.d] = sc_unpack(scsigma{j});
+        % [scj1.m, ~] = sc_unpack(scsigma{j-1});
+        % ti becomes enabled at scj.m?
+        enscj.m = petri_enabled_trans(scj.m, pre);
+        enscj1.m = petri_enabled_trans(scj1.m, pre);
+        if enscj.m(ti) > 0 && enscj1.m(ti) == 0
+            [l, u] = domain_firing_interval(scj.d, ti);
             cons1 = lengtzeros;
             cons1(1, i) = 1;
             cons1(1, j-1) = -1; % j-th state is reached by
@@ -51,7 +53,7 @@ for i = fliplr(1:lengtsigma)
     
     % ti is enabled at the first state
     if flag == 0
-        [l, u] = domain_firing_interval(d1, ti);
+        [l, u] = domain_firing_interval(sc1.d, ti);
         cons1 = lengtzeros;
         cons1(1, i) = 1;
         cons = [cons; cons1];
@@ -62,9 +64,10 @@ for i = fliplr(1:lengtsigma)
     end
     
     % transitions disabled by firing ti
-    [mi, di] = sc_unpack(scsigma{i});
-    mi1 = mi - pre(:, ti);
-    enmi = petri_enabled_trans(mi, pre);
+    sci = scsigma{i};
+    % [mi, di] = sc_unpack(scsigma{i});
+    mi1 = sci.m - pre(:, ti);
+    enmi = petri_enabled_trans(sci.m, pre);
     enmi1 = petri_enabled_trans(mi1, pre);
     distlist = setdiff(find(enmi>0), [find(enmi1>0), ti]);
     
@@ -72,12 +75,14 @@ for i = fliplr(1:lengtsigma)
         % tq is becomes enabled at the first state or not?
         flagq = 0;
         for q = fliplr(2:i)
-            [mq, dq] = sc_unpack(scsigma{q});
-            [mq1, ~] = sc_unpack(scsigma{q-1});
-            enmq = petri_enabled_trans(mq, pre);
-            enmq1 = petri_enabled_trans(mq1, pre);
+            scq = scsigma{q};
+            scq1 = scsigma{q-1};
+            % [mq, dq] = sc_unpack(scsigma{q});
+            % [mq1, ~] = sc_unpack(scsigma{q-1});
+            enmq = petri_enabled_trans(scq.m, pre);
+            enmq1 = petri_enabled_trans(scq1.m, pre);
             if enmq(tq) > 0 && enmq1(tq) == 0
-                [~, u] = domain_firing_interval(dq, tq);
+                [~, u] = domain_firing_interval(scq.d, tq);
                 cons1 = lengtzeros;
                 cons1(1, i) = 1;
                 cons1(1, q-1) = -1;
@@ -88,7 +93,7 @@ for i = fliplr(1:lengtsigma)
         end
         
         if flagq == 0
-            [~, u] = domain_firing_interval(d1, tq);
+            [~, u] = domain_firing_interval(sc1.d, tq);
             cons1 = lengtzeros;
             cons1(1, i) = 1;
             cons = [cons; cons1];
@@ -97,21 +102,24 @@ for i = fliplr(1:lengtsigma)
     end
 end
 
-[ml, dl] = sc_unpack(scsigma{lengtsigma});
-enml = petri_enabled_trans(ml, pre);
+scl = scsigma{lengtsigma};
+% [ml, dl] = sc_unpack(scsigma{lengtsigma});
+enml = petri_enabled_trans(scl.m, pre);
 enml(tsigma(end)) = 0;
 for ti = find(enml>0)
     flagj = 0;
     for j = fliplr(2:lengtsigma)
         % j-th state
-        [mj, dj] = sc_unpack(scsigma{j});
+        scj = scsigma{j};
+        scj1 = scsigma{j-1};
+        % [scj.m, scj.d] = sc_unpack(scsigma{j});
         % j-1 -th state
-        [mj1, ~] = sc_unpack(scsigma{j-1});
-        % ti becomes enabled at mj?
-        enmj = petri_enabled_trans(mj, pre);
-        enmj1 = petri_enabled_trans(mj1, pre);
-        if enmj(ti) > 0 && enmj1(ti) == 0
-            [~, u] = domain_firing_interval(dj, ti);
+        % [scj1.m, ~] = sc_unpack(scsigma{j-1});
+        % ti becomes enabled at scj.m?
+        enscj.m = petri_enabled_trans(scj.m, pre);
+        enscj1.m = petri_enabled_trans(scj1.m, pre);
+        if enscj.m(ti) > 0 && enscj1.m(ti) == 0
+            [~, u] = domain_firing_interval(scj.d, ti);
             cons1 = lengtzeros;
             cons1(1, lengtsigma) = 1;
             cons1(1, j-1) = -1;
@@ -121,7 +129,7 @@ for ti = find(enml>0)
         end
     end
     if flagj == 0
-        [~, u] = domain_firing_interval(d1, ti);
+        [~, u] = domain_firing_interval(sc1.d, ti);
         cons1 = lengtzeros;
         cons1(1, lengtsigma) = 1;
         cons = [cons; cons1];

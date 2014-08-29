@@ -6,8 +6,8 @@ function [ fdg, W ] = fdg(fdg, scg, W, pre, post, I, To, Tfc)
 
 Dnormal = zeros(1, length(Tfc));
 
-[~, graph, itosc, sctoi] = scg_unpack(scg);
-sc0 = get(itosc, 1);
+% [~, graph, itosc, sctoi] = scg_unpack(scg);
+sc0 = get(scg.itosc, 1);
 [sc0m, sc0d] = sc_unpack(sc0);
 
 xi = 1;
@@ -26,6 +26,10 @@ for scu = scg_all_sc(scg)
             end
         end
         
+        for t = fireto
+            scm = sc_successor(scu, t, pre, post, I);
+            if scg_exist_sc(
+        end
     end
 end
 
