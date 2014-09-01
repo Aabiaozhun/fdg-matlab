@@ -34,9 +34,9 @@ for i = fliplr(1:lengtsigma)
         % [scj.m, scj.d] = sc_unpack(scsigma{j});
         % [scj1.m, ~] = sc_unpack(scsigma{j-1});
         % ti becomes enabled at scj.m?
-        enscj.m = petri_enabled_trans(scj.m, tpn);
-        enscj1.m = petri_enabled_trans(scj1.m, tpn);
-        if enscj.m(ti) > 0 && enscj1.m(ti) == 0
+        enscj = petri_enabled_trans(scj.m, tpn);
+        enscj1 = petri_enabled_trans(scj1.m, tpn);
+        if enscj(ti) > 0 && enscj1(ti) == 0
             [l, u] = domain_firing_interval(scj.d, ti);
             cons1 = lengtzeros;
             cons1(1, i) = 1;
@@ -116,9 +116,9 @@ for ti = find(enml>0)
         % j-1 -th state
         % [scj1.m, ~] = sc_unpack(scsigma{j-1});
         % ti becomes enabled at scj.m?
-        enscj.m = petri_enabled_trans(scj.m, tpn);
-        enscj1.m = petri_enabled_trans(scj1.m, tpn);
-        if enscj.m(ti) > 0 && enscj1.m(ti) == 0
+        enscj = petri_enabled_trans(scj.m, tpn);
+        enscj1 = petri_enabled_trans(scj1.m, tpn);
+        if enscj(ti) > 0 && enscj1(ti) == 0
             [~, u] = domain_firing_interval(scj.d, ti);
             cons1 = lengtzeros;
             cons1(1, lengtsigma) = 1;
