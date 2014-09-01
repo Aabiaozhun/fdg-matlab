@@ -9,6 +9,7 @@ g = scg_init(sc0);
 W = {sc0};
 
 while ~isempty(W)
+    x = scg_all_sc(g);
     w = W{1};
     W = W(2:end);
     entrans = petri_enabled_trans(w.m, tpn);
@@ -23,6 +24,7 @@ while ~isempty(W)
             end
         end
     end
+    display(count(g.itosc));
 end
 
 return;

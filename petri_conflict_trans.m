@@ -13,13 +13,12 @@ mtrans = petri_enabled_trans(m, pn);
 % 
 % ctrans = mtrans - m1trans;
 
-
 % Input places of t
 pin = find(pn.pre(:, t)>0)';
 % Output transitions of pin
 tout = [];
 for i = pin
-    tout = [tout, find(pn.post(i, :)>0)];
+    tout = [tout, find(pn.pre(i, :)>0)];
 end
 tout = unique(tout);
 % Transitions in tout which were enabled at m
@@ -27,7 +26,7 @@ ctrans = zeros(1, size(pn.pre, 2));
 for t1 = tout
     ctrans(t1) = mtrans(t1);
 end
-ctrans(t) = 0;
+% ctrans(t) = 0;
 
 % display('----OUT petri_conflict_trans----');
 end

@@ -8,6 +8,7 @@ A = d(:, 1:end-1);
 ineq = domain_gen_inequality(t1, t2, 0, tpn);
 
 ineq = ineq(1:end-1);
+
 [~, ind] = ismember(ineq, A, 'rows');
 
 
