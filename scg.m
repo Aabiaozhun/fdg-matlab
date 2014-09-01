@@ -24,7 +24,7 @@ while ~isempty(W)
             end
         end
     end
-    display(count(g.itosc));
+%     display(count(g.itosc));
 end
 
 return;
