@@ -53,7 +53,7 @@ for i = fliplr(1:lengtsigma)
     
     % ti is enabled at the first state
     if flag == 0
-        [l, u] = domain_firing_interval(sc1.d, ti);
+        [l, u] = domain_firing_interval(sc1.d, ti, tpn.I);
         cons1 = lengtzeros;
         cons1(1, i) = 1;
         cons = [cons; cons1];
@@ -129,7 +129,7 @@ for ti = find(enml>0)
         end
     end
     if flagj == 0
-        [~, u] = domain_firing_interval(sc1.d, ti);
+        [~, u] = domain_firing_interval(sc1.d, ti, tpn.I);
         cons1 = lengtzeros;
         cons1(1, lengtsigma) = 1;
         cons = [cons; cons1];
@@ -138,11 +138,11 @@ for ti = find(enml>0)
 end
 
 % solve
-[~, fmin, ~, ~] = glpk(f, cons, b, tpn.I(:, 1), tpn.I(:, 2));
-gl = fmin;
-[~, fmin, ~, ~] = glpk(-f, cons, b, tpn.I(:, 1), tpn.I(:, 2));
-gu = -fmin;
 
+[~, fmin, ~, ~] = glpk(f, cons, b);
+gl = fmin;
+[~, fmin, ~, ~] = glpk(-f, cons, b);
+gu = -fmin;
 return;
 
 end

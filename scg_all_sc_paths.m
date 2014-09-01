@@ -44,7 +44,7 @@ for i = 2 : N
     % Compute the costs of the new set of paths by adding the old ones
     % to the cost of each newly traversed edge
     inds = sub2ind([N,N],nextpath(:, i-1),nextpath(:,i));
-    costs = costs(rowlist) + scg(inds);
+%     costs = costs(rowlist) + scg(inds);
     
     % For any path finishing on the end node, add it to the return list
     % (and it's corresponding cost)

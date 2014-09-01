@@ -1,4 +1,4 @@
-function [ fdg, W ] = fdg(fdg, scg, W, tpn, To, Tfc)
+function [ fdgraph, W ] = fdg(fdgraph, scg, W, tpn, To, Tfc)
 
 % Construct FDG based on a SCG
 % This function does not diagnose on FDG. Diag is for diagnosis on a FDG.
@@ -11,11 +11,13 @@ sc0 = get(scg.itosc, 1);
 % [sc0m, sc0d] = sc_unpack(sc0);
 
 xi = 1;
-for scu = scg_all_sc(scg)
+all_sc = scg_all_sc(scg);
+for sci = 1:size(all_sc, 1)
+    scu = all_sc{sci};
     xi = xi + 1;
 %     [scum, scud] = sc_unpack(scu);
     % entrans is a list of index
-    entrans = find(petri_enabled_trans(scu.m, tpn));
+    entrans = find(petri_enabled_trans(scu.m, tpn)>0);
     % enabled observable transitions
     ento = intersect(find(To>0), entrans);
     if ~isempty(ento)
@@ -30,12 +32,12 @@ for scu = scg_all_sc(scg)
             Dsigma = Dnormal;
             for t = fireto
                 scm = sc_successor(scu, t, tpn);
-                if ~scg_exist_sc(fdg, scm)
-                    fdg = scg_add_sc(fdg, sc0, t, scm);
+                if ~scg_exist_sc(fdgraph, scm)
+                    fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
                     W{end+1} = scm;
                 end
-                [gl, gu] = fdg_firing_domain(scu, t, tpn);
-                fdg = fdg_add_edge_label(fdg, sc0, scu, [gl, gu],...
+                [gl, gu] = fdg_firing_domain({scu}, t, tpn);
+                fdgraph = fdg_add_edge_label(fdgraph, sc0, scu, [gl, gu],...
                     t, tpn, To, Tfc);
             end
         else
@@ -45,12 +47,12 @@ for scu = scg_all_sc(scg)
                 tsigma = tpaths{j};
                 for t = fireto
                     scm = sc_successor(scu, t, tpn);
-                    if ~scg_exist_sc(fdg, scm)
-                        fdg = scg_add_sc(fdg, sc0, t, scm);
+                    if ~scg_exist_sc(fdgraph, scm)
+                        fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
                         W{end+1} = scm;
                     end
                     [gl, gu] = fdg_firing_domain(scsigma, [tsigma t], tpn);
-                    fdg = fdg_add_edge_label(fdg, sc0, scu, [gl, gu],...
+                    fdgraph = fdg_add_edge_label(fdgraph, sc0, scu, [gl, gu],...
                         [tsigma t], tpn, To, Tfc);
                 end
             end
