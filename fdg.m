@@ -4,6 +4,8 @@ function [ fdgraph, W ] = fdg(fdgraph, scg, W, tpn, To, Tfc)
 % This function does not diagnose on FDG. Diag is for diagnosis on a FDG.
 % Use DiagnosisFDG for constructing the FDG and diagnosing on it.
 
+display('---IN fdg---');
+
 Dnormal = zeros(1, length(Tfc));
 
 % [~, graph, itosc, sctoi] = scg_unpack(scg);
@@ -34,9 +36,9 @@ for sci = 1:size(all_sc, 1)
                 scm = sc_successor(scu, t, tpn);
                 if ~scg_exist_sc(fdgraph, scm)
                     fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
-                    W{end+1} = scm;
+                    W(end+1) = get(fdgraph.sctoi, scm);
                 end
-                [gl, gu] = fdg_firing_domain({scu}, t, tpn);
+                [gl, gu] = fdg_firing_domain(scu, t, tpn);
                 fdgraph = fdg_add_edge_label(fdgraph, sc0, scu, [gl, gu],...
                     t, tpn, To, Tfc);
             end
@@ -49,7 +51,7 @@ for sci = 1:size(all_sc, 1)
                     scm = sc_successor(scu, t, tpn);
                     if ~scg_exist_sc(fdgraph, scm)
                         fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
-                        W{end+1} = scm;
+                        W(end+1) = get(fdgraph.sctoi, scm);
                     end
                     [gl, gu] = fdg_firing_domain(scsigma, [tsigma t], tpn);
                     fdgraph = fdg_add_edge_label(fdgraph, sc0, scu, [gl, gu],...
@@ -58,7 +60,14 @@ for sci = 1:size(all_sc, 1)
             end
         end
     end
+%     fdgraph.graph
 end
 
+fdgraph = fdg_update_vlabel(fdgraph, sc0, Tfc);
+
+%necessary?
+W = unique(W);
+
+display('---OUT fdg---');
 end
 
