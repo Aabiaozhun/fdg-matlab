@@ -19,23 +19,20 @@ tic;
 sc0 = sc_initial_state(m0, tpn);
 fdgraph = fdg_init(sc0);
 scgraph = scg(sc0, tpn, To);
+
 [fdgraph, W] = fdg(fdgraph, scgraph, [], tpn, To, Tfc);
-fdgraph.graph
 
 %initial the set of consistent states
 S = put(hashtable, get(fdgraph.sctoi, sc0), Dnormal);
 timeupdate = [timeupdate; toc];
-
 % diagnose using output edges of scfi
 tic;
-
 Diagoutput = [Diagoutput; get(fdgraph.vlabel, get(fdgraph.sctoi, sc0))];
 timediag = [timediag; toc];
 time = [time; timeupdate(end)+timediag(end)];
 
 sizeSCP = [1];
 sizeS1 = [1];
-
 observation = [[0;0], observation];
 for i = 2:size(observation, 2)
     tic;
@@ -52,8 +49,9 @@ for i = 2:size(observation, 2)
                 % pos should be empty or an integer
                 pos = find(W==nextscfi);
                 if ~isempty(pos)
-                    scgraph = scg(get(fdgraph.itosc, pos), tpn, To);
+                    scgraph = scg(get(fdgraph.itosc, W(pos)), tpn, To);
                     [fdgraph, W] = fdg(fdgraph, scgraph, W, tpn, To, Tfc);
+                    W = [W(1:pos-1), W(pos+1:end)];
                 end
             end
         end
@@ -71,6 +69,3 @@ for i = 2:size(observation, 2)
         disp([Diagoutput, time, timeupdate, timediag, sizeS1]);
     end
 end
-
-end
-

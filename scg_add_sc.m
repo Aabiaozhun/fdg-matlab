@@ -11,11 +11,11 @@ if ~scg_exist_sc(scg, sc2)
     scg.graph(sc2i, sc2i) = 0;
 end
 
-if t ~= 0
+% if t ~= 0
     sc1i = get(scg.sctoi, sc1);
     sc2i = get(scg.sctoi, sc2);
     scg.graph(sc1i, sc2i) = t;
-end
+% end
 
 % scg = scg_pack(scs, graph, itosc, sctoi);
 

@@ -1,4 +1,6 @@
-function [ Dw, S ] = fdg_diag( fdg, S, tj, delta, Tfc )
+function [ Dw, Sf ] = fdg_diag( fdg, S, tj, delta, Tfc )
+
+% display('----IN fdg_diag----');
 
 Sf = hashtable;
 Dempty = ones(1, size(Tfc, 2)) * -1;
@@ -90,6 +92,8 @@ for i = 1:size(Ssclist, 1)
         Sf = put(Sf, sct, Dsct);
     end
 end
+
+% display('----OUT fdg_diag----');
 
 return;
 end
