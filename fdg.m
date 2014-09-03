@@ -32,7 +32,7 @@ for sci = 1:size(all_sc, 1)
             for t = fireto
                 scm = sc_successor(scu, t, tpn);
                 inflag = scg_exist_sc(fdgraph, scm);
-                fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
+                fdgraph = fdg_add_sc(fdgraph, sc0, t, scm);
                 if ~inflag
                     W(end+1) = get(fdgraph.sctoi, scm);
                 end
@@ -48,7 +48,7 @@ for sci = 1:size(all_sc, 1)
                 for t = fireto
                     scm = sc_successor(scu, t, tpn);
                     inflag = scg_exist_sc(fdgraph, scm);
-                    fdgraph = scg_add_sc(fdgraph, sc0, t, scm);
+                    fdgraph = fdg_add_sc(fdgraph, sc0, t, scm);
                     if ~inflag
                         W(end+1) = get(fdgraph.sctoi, scm);
                     end

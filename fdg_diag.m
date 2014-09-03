@@ -14,7 +14,8 @@ for i = 1:size(Ssclist, 1)
     sc = Ssclist{i};
     Dsc = get(S, sc);
     
-    sctlist = find(fdg.graph(sc, :)==tj);
+%     sctlist = find(fdg.graph(sc, :)==tj);
+    sctlist = fdg.graph(sc, tj);
     while ~isempty(sctlist)
         sct = sctlist(1);
         sctlist = sctlist(2:end);
@@ -63,7 +64,6 @@ for i = 1:size(Ssclist, 1)
             if Dsct(tfi) == 1
                 Dsctall(tfi) = 1;
             else
-               
                 sctvlabel = get(fdg.vlabel, sct);
                 if sctvlabel(tfi) == 0
                     firetfs = 0;
@@ -83,6 +83,7 @@ for i = 1:size(Ssclist, 1)
                     Dsctall(tfi) = 1;
                 end
             end
+%             [Dw, tfi, Dsctall]
             if Dw(tfi) == -1
                 Dw(tfi) = Dsctall(tfi);
             elseif Dw(tfi) ~= Dsctall(tfi)

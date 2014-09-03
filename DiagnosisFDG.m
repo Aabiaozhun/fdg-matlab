@@ -43,7 +43,8 @@ for i = 2:size(observation, 2)
     [Ssclist, ~] = dump(S);
     for j = 1:size(Ssclist, 1)
         sc = Ssclist{j};
-        nextsclist = find(fdgraph.graph(sc, :)==tj);
+%         nextsclist = find(fdgraph.graph(sc, :)==tj);
+        nextsclist = fdgraph.graph(sc, tj);
         if ~isempty(nextsclist)
             for nextscfi = nextsclist
                 % pos should be empty or an integer

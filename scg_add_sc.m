@@ -4,6 +4,9 @@ function [ scg ] = scg_add_sc( scg, sc1, t, sc2 )
 % If sc2 is in scg, then only add the edge.
 % If t == 0, then only add sc2.
 
+% display('----IN scg_add_sc----');
+
+
 if ~scg_exist_sc(scg, sc2)
     scg.itosc = put(scg.itosc, count(scg.itosc)+1, sc2);
     scg.sctoi = put(scg.sctoi, sc2, count(scg.itosc));
@@ -17,7 +20,7 @@ end
     scg.graph(sc1i, sc2i) = t;
 % end
 
-% scg = scg_pack(scs, graph, itosc, sctoi);
+% display('----OUT scg_add_sc----');
 
 end
 
