@@ -20,7 +20,7 @@ while ~isempty(W)
                 if ~scg_exist_sc(g, suc)
                     W{end+1} = suc;
                 end
-                g = scg_add_sc(g, w, i, suc);
+                g = fdg_add_sc(g, w, i, suc);
             end
         end
     end

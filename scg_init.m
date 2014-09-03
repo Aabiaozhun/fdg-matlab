@@ -2,6 +2,7 @@ function [ scg ] = scg_init( sc0 )
 
 % Initialize a scg with the initial sc.
 
+% updated to the same as fdg_init
 scg.graph = sparse([0]);
 scg.itosc = hashtable;
 scg.itosc = put(scg.itosc, 1, sc0);

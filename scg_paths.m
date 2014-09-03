@@ -26,9 +26,15 @@ while ~all(pathstop)
     
     if ~curpathstop
         laststate = curscpath(curscpathpos);
-        nextt = scg.graph(laststate, find(scg.graph(laststate, :)>0));
+%         nextt = scg.graph(laststate, find(scg.graph(laststate, :)>0));
+        if laststate <= size(scg.graph, 1)
+            nextt = find(scg.graph(laststate, :)>0);
+        else
+            nextt = [];
+        end
         for i = nextt
-            nscl = find(scg.graph(laststate, :)==i);
+%             nscl = find(scg.graph(laststate, :)==i);
+            nscl = scg.graph(laststate, i);
             if ~isempty(nscl)
                 for nsc = nscl
                     nonext = 0;
