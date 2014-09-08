@@ -17,7 +17,7 @@ Dempty = Dw;
 
 tic;
 sc0 = sc_initial_state(m0, tpn);
-fdgraph = fdg_init(sc0);
+fdgraph = fdg_init(sc0, tpn);
 scgraph = scg(sc0, tpn, To);
 
 [fdgraph, W] = fdg(fdgraph, scgraph, [], tpn, To, Tfc);
@@ -44,7 +44,12 @@ for i = 2:size(observation, 2)
     for j = 1:size(Ssclist, 1)
         sc = Ssclist{j};
 %         nextsclist = find(fdgraph.graph(sc, :)==tj);
-        nextsclist = fdgraph.graph(sc, tj);
+%         nextsclist = fdgraph.graph(sc, tj);
+        if fdgraph.graph(sc, tj) > 0
+            nextsclist = fdgraph.outsc{fdgraph.graph(sc, tj)};
+        else
+            nextsclist = [];
+        end
         if ~isempty(nextsclist)
             for nextscfi = nextsclist
                 % pos should be empty or an integer
@@ -67,6 +72,6 @@ for i = 2:size(observation, 2)
     sizeS1 = [sizeS1; count(S)];
     if show
         disp('to tau diagnosis -- -- time -- timeupdate -- timediag');
-        disp([Diagoutput, time, timeupdate, timediag, sizeS1]);
+        disp([Diagoutput, time, timeupdate, timediag, sizeS1, count(fdgraph.itosc)]);
     end
 end

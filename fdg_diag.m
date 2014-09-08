@@ -1,6 +1,13 @@
 function [ Dw, Sf ] = fdg_diag( fdg, S, tj, delta, Tfc )
 
-% display('----IN fdg_diag----');
+debug = 0;
+
+
+if debug
+    display('----IN fdg_diag----');
+end
+
+% with fdg.outsc
 
 Sf = hashtable;
 Dempty = ones(1, size(Tfc, 2)) * -1;
@@ -15,7 +22,11 @@ for i = 1:size(Ssclist, 1)
     Dsc = get(S, sc);
     
 %     sctlist = find(fdg.graph(sc, :)==tj);
-    sctlist = fdg.graph(sc, tj);
+    if fdg.graph(sc, tj) > 0
+        sctlist = fdg.outsc{fdg.graph(sc, tj)};
+    else
+        sctlist = [];
+    end
     while ~isempty(sctlist)
         sct = sctlist(1);
         sctlist = sctlist(2:end);
@@ -94,7 +105,9 @@ for i = 1:size(Ssclist, 1)
     end
 end
 
-% display('----OUT fdg_diag----');
+if debug
+    display('----OUT fdg_diag----');
+end
 
 return;
 end

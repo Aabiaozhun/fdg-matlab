@@ -9,7 +9,8 @@ while ~isempty(W)
     sc = W(1);
     W = W(2:end);
     
-    nsclist = unique(sort(fdg.graph(sc, fdg.graph(sc, :)>0)));
+%     nsclist = unique(sort(fdg.graph(sc, fdg.graph(sc, :)>0)));
+    nsclist = fdg_next_sc(fdg, sc);
     i = 0;
     for nsc = nsclist
         i = i + 1;

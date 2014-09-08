@@ -1,7 +1,8 @@
 function [ fdg ] = rd_modify_input_edge_tail( fdg, sc1i, sc2i )
 
-insclist = mod(find(fdg.graph==sc2i), size(fdg.graph, 1));
-insclist(insclist==0) = size(fdg.graph, 1);
+% insclist = mod(find(fdg.graph==sc2i), size(fdg.graph, 1));
+% insclist(insclist==0) = size(fdg.graph, 1);
+insclist = fdg_input_sc(sc2i, fdg);
 
 sc2 = get(fdg.itosc, sc2i);
 

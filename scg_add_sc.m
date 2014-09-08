@@ -17,7 +17,7 @@ end
 % if t ~= 0
     sc1i = get(scg.sctoi, sc1);
     sc2i = get(scg.sctoi, sc2);
-    scg.graph(sc1i, sc2i) = t;
+    scg.graph(sc1i, t) = sc2i;
 % end
 
 % display('----OUT scg_add_sc----');

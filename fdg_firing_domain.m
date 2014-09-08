@@ -82,7 +82,7 @@ for i = fliplr(1:lengtsigma)
             enmq = petri_enabled_trans(scq.m, tpn);
             enmq1 = petri_enabled_trans(scq1.m, tpn);
             if enmq(tq) > 0 && enmq1(tq) == 0
-                [~, u] = domain_firing_interval(scq.d, tq);
+                [~, u] = domain_firing_interval(scq.d, tq, tpn.I);
                 cons1 = lengtzeros;
                 cons1(1, i) = 1;
                 cons1(1, q-1) = -1;

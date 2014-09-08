@@ -4,7 +4,11 @@ function [ fdgraph, W ] = fdg(fdgraph, scg, W, tpn, To, Tfc)
 % This function does not diagnose on FDG. Diag is for diagnosis on a FDG.
 % Use DiagnosisFDG for constructing the FDG and diagnosing on it.
 
-% display('---IN fdg---');
+debug = 0;
+
+if debug
+    display('---IN fdg---');
+end
 
 Dnormal = zeros(1, length(Tfc));
 % [~, graph, itosc, sctoi] = scg_unpack(scg);
@@ -67,6 +71,8 @@ fdgraph = fdg_update_vlabel(fdgraph, sc0, Tfc);
 %necessary?
 W = unique(W);
 
-% display('---OUT fdg---');
+if debug
+    display('---OUT fdg---');
+end
 end
 

@@ -2,10 +2,14 @@ function [ fdg ] = fdg_update_vlabel( fdg, sc, Tfc )
 
 % display('----IN fdg_update_vlabel----');
 
+% with fdg.outsc
+
 sci = get(fdg.sctoi, sc);
 
 % next_scis = find(fdg.graph(sci, :)>0);
-next_scis = fdg.graph(sci, fdg.graph(sci, :)>0);
+% next_scis = fdg.graph(sci, fdg.graph(sci, :)>0);
+next_scis = fdg_next_sc(fdg, sci);
+
 sc_diag = ones(1, size(Tfc, 2)) * -1;
 
 for si = next_scis
