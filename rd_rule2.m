@@ -1,7 +1,6 @@
-function [ fdg ] = rd_rule2( fdg )
+function [ fdg, rsclist ] = rd_rule2( fdg )
 
 rsclist = [];
-test = [];
 
 W = 1:size(fdg.graph, 1);
 
@@ -24,11 +23,15 @@ while ~isempty(W)
                 W(W==i) = [];
             end
             for i = rule2sc
-                
+                fdg = rd_modify_output_edge_head(fdg, i, nsc);
+                fdg = rd_modify_input_edge_tail(fdg, i, nsc);
             end
         end
+        
+        rsclist = unique([rsclist, rule2sc]);
     end
 end
+
 
 end
 

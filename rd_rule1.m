@@ -2,6 +2,8 @@ function [ fdg ] = rd_rule1( fdg )
 
 % The first reduction rule.
 
+% with fdg.outsc
+
 W = 1:size(fdg.graph, 1);
 flag = 1;
 

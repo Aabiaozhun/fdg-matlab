@@ -14,7 +14,23 @@ end
 tolist = unique(tolist);
 
 for to = tolist
-    sc12to = fdg.graph(sc12i, 
+    if fdg.graph(sc12i, to) > 0
+        sc12to = fdg.outsc{fdg.graph(sc12i, to)};
+    else
+        sc12to = [];
+    end
+    exist = 0;
+    for j = sc12to
+        if j == sc2i
+            exist = 1;
+        end
+    end
+    if ~exist
+        sc12to = [sc12to, sc2];
+    end
+    for j = sc12to
+        fdg = fdg_add_sc(fdg, sc12, to, j);
+    end
 end
 
 end
