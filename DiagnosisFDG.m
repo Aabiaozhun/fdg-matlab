@@ -33,6 +33,7 @@ time = [time; timeupdate(end)+timediag(end)];
 
 sizeSCP = [1];
 sizeS1 = [1];
+sizeFDG = [count(fdgraph.itosc)];
 observation = [[0;0], observation];
 for i = 2:size(observation, 2)
     tic;
@@ -41,10 +42,10 @@ for i = 2:size(observation, 2)
     deltaj = tauj - observation(2, i-1);
     % Ssclist is a list of sc indices
     [Ssclist, ~] = dump(S);
+
     for j = 1:size(Ssclist, 1)
         sc = Ssclist{j};
 %         nextsclist = find(fdgraph.graph(sc, :)==tj);
-%         nextsclist = fdgraph.graph(sc, tj);
         if fdgraph.graph(sc, tj) > 0
             nextsclist = fdgraph.outsc{fdgraph.graph(sc, tj)};
         else
@@ -70,8 +71,10 @@ for i = 2:size(observation, 2)
     Diagoutput = [Diagoutput; Dw];
     sizeSCP = [sizeSCP, size(fdgraph.graph, 1)];
     sizeS1 = [sizeS1; count(S)];
+    sizeFDG = [sizeFDG; count(fdgraph.itosc)];
     if show
+        tj
         disp('to tau diagnosis -- -- time -- timeupdate -- timediag');
-        disp([Diagoutput, time, timeupdate, timediag, sizeS1, count(fdgraph.itosc)]);
+        disp([Diagoutput, time, timeupdate, timediag, sizeS1, sizeFDG]);
     end
 end
