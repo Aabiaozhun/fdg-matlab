@@ -5,6 +5,8 @@ function [ g ] = scg( sc0, tpn, To )
 % Compute an unobservable state class graph starting from sc0.
 % To is a binary vector indicates observable transitions.
 
+disp('-----IN scg-----');
+
 g = scg_init(sc0);
 W = {sc0};
 
@@ -24,8 +26,9 @@ while ~isempty(W)
             end
         end
     end
-%     display(count(g.itosc));
 end
+
+disp('-----OUT scg-----')
 
 return;
 

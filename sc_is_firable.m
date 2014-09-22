@@ -26,11 +26,19 @@ for i = 1:size(b, 1)
 end
 
 param.msglev = 0;
+% 
+% [~, ~, status, ~] = glpk(c, a, b, tpn.I(1, :)', tpn.I(2, :)', ctype,...
+%     vartype, 1, param);
 
-[~, ~, status, ~] = glpk(c, a, b, tpn.I(1, :)', tpn.I(2, :)', ctype,...
-    vartype, 1, param);
+[~, ~, status, ~] = glpk(c, a, b);
+
 
 % [~, ~, status] = linprog(c, a, b);
+
+
+[a,b]
+
+status
 
 if status == 5
     firable = 1;
