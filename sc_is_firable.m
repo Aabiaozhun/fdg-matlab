@@ -18,14 +18,14 @@ b = d1(:, end);
 c = zeros(size(tpn.pre, 2), 1);
 
 
-ctype = '';
-vartype = '';
-for i = 1:size(b, 1)
-    ctype = ctype + 'U';
-    vartype = vartype + 'C';
-end
+% ctype = '';
+% vartype = '';
+% for i = 1:size(b, 1)
+%     ctype = ctype + 'U';
+%     vartype = vartype + 'C';
+% end
 
-param.msglev = 0;
+% param.msglev = 0;
 % 
 % [~, ~, status, ~] = glpk(c, a, b, tpn.I(1, :)', tpn.I(2, :)', ctype,...
 %     vartype, 1, param);
@@ -35,10 +35,6 @@ param.msglev = 0;
 
 % [~, ~, status] = linprog(c, a, b);
 
-
-[a,b]
-
-status
 
 if status == 5
     firable = 1;
