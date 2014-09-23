@@ -10,6 +10,7 @@ fdg.sctoi = put(hashtable, sc0, 1);
 fdg.vlabel = hashtable;
 fdg.elabel = hashtable;
 fdg.edges = hashtable;
+fdg.g = sparse(0);
 
 end
 

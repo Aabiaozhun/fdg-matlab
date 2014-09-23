@@ -6,9 +6,9 @@ function [ fdg ] = fdg_update_vlabel( fdg, sc, Tfc )
 
 sci = get(fdg.sctoi, sc);
 
-% next_scis = find(fdg.graph(sci, :)>0);
+next_scis = find(fdg.g(sci, :)>0);
 % next_scis = fdg.graph(sci, fdg.graph(sci, :)>0);
-next_scis = fdg_next_sc(fdg, sci);
+% next_scis = fdg_next_sc(fdg, sci);
 
 sc_diag = ones(1, size(Tfc, 2)) * -1;
 

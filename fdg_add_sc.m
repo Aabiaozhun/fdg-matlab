@@ -24,6 +24,10 @@ else
     fdg.outsc{fdg.graph(sc1i, t)} = [out, sc2i];
 end
 
+fdg.g(sc1i, sc2i) = 1;
+if size(fdg.g, 1) < sc2i
+    fdg.g(sc2i, 1) = 0;
+
 
 % display('----OUT fdg_add_sc----');
 
