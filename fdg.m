@@ -15,6 +15,8 @@ Dnormal = zeros(1, length(Tfc));
 sc0 = get(scg.itosc, 1);
 % [sc0m, sc0d] = sc_unpack(sc0);
 
+% [rscpaths, rtpaths] = scg_all_paths2(scg, sc0);
+
 xi = 1;
 all_sc = scg_all_sc(scg);
 for sci = 1:size(all_sc, 1)
@@ -46,6 +48,10 @@ for sci = 1:size(all_sc, 1)
             end
         else
             [scpaths, tpaths] = scg_all_paths(scg, sc0, scu);
+%             sc0scgi = get(scg.sctoi, sc0);
+%             scuscgi = get(scg.sctoi, scu);
+%             scpaths = get(rscpaths, [sc0scgi, scuscgi]);
+%             tpaths = get(rtpaths, [sc0scgi, scuscgi]);
             for j = 1:size(scpaths, 2)
                 scsigma = scpaths{j};
                 tsigma = tpaths{j};
