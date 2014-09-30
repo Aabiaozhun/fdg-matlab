@@ -143,6 +143,7 @@ end
 gl = fmin;
 [~, fmin, ~, ~] = glpk(-f, cons, b);
 gu = -fmin;
+
 return;
 
 end
