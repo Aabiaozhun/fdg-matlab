@@ -21,7 +21,7 @@ end
 sc1i = get(fdg.sctoi, sc1);
 sc2i = get(fdg.sctoi, sc2);
 v = get(fdg.elabel, [sc1i, sc2i]);
-v = [v; {to, domain, vsigma, D}];
+v = [v; {to, domain, vsigma, D, sigma}];
 fdg.elabel = put(fdg.elabel, [sc1i, sc2i], v);
 
 end

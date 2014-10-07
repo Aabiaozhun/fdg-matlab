@@ -4,9 +4,8 @@ function [ sc0 ] = sc_initial_state( m, tpn)
 
 entrans = petri_enabled_trans(m, tpn);
 entransi = find(entrans>0);
-d = domain_gen_inequality(entrans(1), 0, tpn.I(2, entrans(1)), tpn);
-d = domain_add_inequality(d, 0, entrans(1), -tpn.I(1, entrans(1)), tpn);
-
+d = domain_gen_inequality(entransi(1), 0, tpn.I(2, entransi(1)), tpn);
+d = domain_add_inequality(d, 0, entransi(1), -tpn.I(1, entransi(1)), tpn);
 for i = 2:length(entransi)
     t = entransi(i);
     
