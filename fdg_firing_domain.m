@@ -7,7 +7,7 @@ lengtzeros = zeros(1, lengtsigma);
 cons = [];
 b = [];
 f = lengtzeros';
-f(1, end) = 1;
+f(end, 1) = 1;
 
 for i = 1:lengtsigma
     cons1 = lengtzeros;
