@@ -48,7 +48,7 @@ for i = 1:size(Ssclist, 1)
                 for tfi = 1:size(Tfc, 2)
                     tfs = Tfc{tfi};
                     if sum(esigma(tfs)) > 0
-                        if Dtosct(tfi) == -1 || Dtosct(tfi, 2) == 1
+                        if Dtosct(tfi) == -1 || Dtosct(tfi) == 1
                             Dtosct(tfi) = 1;
                         else
                             Dtosct(tfi) = 2;
