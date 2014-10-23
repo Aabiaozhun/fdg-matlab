@@ -27,6 +27,7 @@ end
 fdg.g(sc1i, sc2i) = t;
 if size(fdg.g, 1) < sc2i
     fdg.g(sc2i, 1) = 0;
+end
 
 
 % display('----OUT fdg_add_sc----');

@@ -18,6 +18,11 @@ end
     sc1i = get(scg.sctoi, sc1);
     sc2i = get(scg.sctoi, sc2);
     scg.graph(sc1i, t) = sc2i;
+    
+    scg.g(sc1i, sc2i) = t;
+    if size(scg.g, 1) < sc2i
+        scg.g(sc2i, 1) = 0;
+    end
 % end
 
 % display('----OUT scg_add_sc----');
